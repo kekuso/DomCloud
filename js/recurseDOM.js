@@ -4,14 +4,28 @@ function recurseDOM (element) {
   if(!element) {
     return;
   }
-  recurseDOM(element.nextSibling);
-  console.log(element);
-  // if key already exists
+  // if key already exists, increment it
   if(docObj[element]) {
     docObj[element] = docObj[element] + 1;
+    //console.log("Increment property: " + element);
+  }
+  // Otherwise create a new key with value 1
+  else {
+    //console.log("Creating new property: " + element);
+    docObj[element] = 1;
+  }
+
+  // recurse by starting at the last child
+  if(element.hasChildNodes()) {
+    if(element.nextSibling) {
+      recurseDOM(element.nextSibling);
+    }
+    else {
+      recurseDOM(element.firstElementChild);
+    }
   }
   else {
-    docObj[element] = 1;
+    recurseDOM(element.parentElement);
   }
 }
 
